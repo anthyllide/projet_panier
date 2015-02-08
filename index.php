@@ -19,9 +19,9 @@ $donnees = $rep -> fetchAll();
 <link rel="stylesheet" href="css/style.css" media="screen" />
 </head>
 <body>
-<header>
-<h1>Ma p'tite boutique</h1>
-</header>
+<div id="wrapper">
+
+<?php require_once ('include/inc_header.php') ?>
 
 <section>
 <!-- Affichage des produits -->
@@ -31,30 +31,44 @@ foreach ($donnees as $key => $value)
 $NameProduct=$value ['NameProduct'];
 $PriceProduct = $value ['PriceProduct'];
 $id = $value ['IDProduct'];
+$stock = $value ['StockProduct'];
 ?>
+
 <div class="article">
 
 <h2><?php echo $NameProduct; ?></h2>
-<p><?php echo $PriceProduct; ?></p>
+<p class="prix"><?php echo $PriceProduct.'€'; ?></p>
+
+<?php
+if ($stock > 0)
+{
+?>
 
 <form action="panier.php" method="post">
 <p><input type="submit" name="<?php echo $id; ?>" value="Ajouter au panier"/></p>
 </form>
 
-</div>
+
+<?php
+}
+else
+{
+?>
+<p class="reappro">En cours de réapprovisionnement</p>
 <?php
 }
 ?>
+</div>
+<div class="clear"></div>
+<?php
+}
+?>
+
 </section>
 
-<aside id="panier">
-<p><a href="panier.php">Votre panier</a></p>
-<p>Panier vide</p>
-</aside>
-<footer>
-<span>Copyright : ma-ptite-boutique.</span>
-<span><a href="mailto:info@ma-ptite-boutique.com">Nous contactez</a></span>
-</footer>
+<?php require_once('include/inc_footer.php'); ?>
+
+</div>
 </body>
 
 </html>
