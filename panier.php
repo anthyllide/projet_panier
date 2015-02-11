@@ -1,57 +1,11 @@
-<?php session_start(); ?>
-<?php require('include/inc_refresh.php'); ?>
-<?php require_once ('include/inc_connexion.php'); ?>
-
-
 <?php 
-//***MANQUE COOKIE***
 
- // Verification existence $_POST
+session_start(); 
+require('include/inc_refresh.php'); 
+require_once ('include/inc_connexion.php'); 
+require ('scripts/session_panier.php');
 
-if (!empty ($_POST))
-{
-
-foreach ($_POST as $key => $value)//boucle pour extraire l'id produit
-{
-$id = $key;
-}
-	// vérification existence $_SESSION ['panier']
-	if (!isset ($_SESSION ['panier']))
-	{
-	$_SESSION ['panier'] = array();
-	}
-
-	if (isset ($_SESSION ['panier'][$id]))
-	{
-		$rep = $bdd -> prepare ('SELECT StockProduct FROM products WHERE IDProduct = ?');
-
-		$rep -> execute (array($id));
-
-		$row = $rep -> fetch();
-
-		$stock = $row['StockProduct'];
-
-
-			if ((!empty ($stock)) AND ($_SESSION ['panier'][$id] < $stock))
-			{
-	
-			$_SESSION ['panier'][$id]++;
-			
-			}
-	}
-	else
-	{
-	$_SESSION ['panier'][$id] = 1; //qte à 1
-	}
-	var_dump($_SESSION['panier']);
-}
-elseif (empty($_SESSION['panier']))
-{
-	$message='Votre panier est vide.';
-}
-?>
-	
-	
+?>	
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -68,7 +22,7 @@ elseif (empty($_SESSION['panier']))
 <h1 class="titre_panier">Votre Panier</h1>
 
 <?php
-if (isset ($message))
+if (isset ($message)) //affichage message erreur
 {
 ?>
 <p class="erreur"><?php echo $message;
@@ -98,15 +52,14 @@ unset ($_SESSION ['stock_error']);
 <th>Supprimer</th>
 </tr>
 </thead>
-
-
-
-
 <tbody>
-<?php 
-foreach ($_SESSION ['panier'] as $key => $qte)
-{
 
+<?php 
+
+$grand_total = 0; //initialisation de $grand_total
+
+foreach ($_SESSION ['panier'] as $key => $qte) //lecture du panier
+{
 
 $rep = $bdd -> prepare ('SELECT * FROM products WHERE IDProduct= ?');
 $rep -> execute (array($key));
@@ -115,24 +68,22 @@ $donnees = $rep -> fetch();
 
 $nom = $donnees ['NameProduct'];
 $prix = $donnees ['PriceProduct'];
-$prix_total = $prix*$qte;
-$total['total'] = $prix_total + $prix_total ;
+$prix_total = $prix*$qte; //calculs prix total et total à payer TTC
+
+$grand_total += $prix_total;
 
 ?>
 
 <tr>
 <td><?php echo $nom; ?></td>
-<td><a class="choix_quantite" href="include/less.php?id=<?php echo $key; ?>">-</a><span><?php echo $qte;?></span><a class="choix_quantite" href="include/add.php?id=<?php echo $key;?>">+</a></td>
+<td><a class="choix_quantite" href="scripts/less.php?id=<?php echo $key; ?>">-</a><span><?php echo $qte;?></span><a class="choix_quantite" href="scripts/add.php?id=<?php echo $key;?>">+</a></td>
 <td><?php echo $prix.'€'; ?></td>
 <td><?php echo $prix_total.'€'; ?></td>
-<td><a class="supprimer_article" href="include/del.php?id=<?php echo $key; ?>">x</a></td>
+<td><a class="supprimer_article" href="scripts/del.php?id=<?php echo $key; ?>">x</a></td>
 </tr>
-
-
 
 <?php
 }
-
 
 ?>
 </tbody>
@@ -142,19 +93,18 @@ $total['total'] = $prix_total + $prix_total ;
 <td class="no_border"></td>
 <td class="no_border"></td>
 <td class="table_bold">TOTAL</td>
-<td><?php echo $total ['total'].'€'; ?> </td>
+<td><?php echo $grand_total.'€'; ?> </td>
 </tr>
 <tr>
 <td class="no_border"></td>
 <td class="no_border"></td>
 <td class="table_bold">dont TVA 20%</td>
-<td><?php echo round ($tva = $total ['total'] -($total ['total']/1.2),2).'€' ;?></td>
+<td><?php echo round ($tva = $grand_total -($grand_total*0.8),2).'€' ;?></td>
 </tr>
 </tfoot>
 
 
 </table>
-
 
 <form action="#">
 <input id="valider_panier" type="submit" name="valider" value="Valider le panier" />
@@ -165,5 +115,4 @@ $total['total'] = $prix_total + $prix_total ;
 
 </div>
 </body>
-
 </html>

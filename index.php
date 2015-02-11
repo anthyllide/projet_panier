@@ -9,8 +9,6 @@ $donnees = $rep -> fetchAll();
 ?>
 
 
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -40,7 +38,7 @@ $stock = $value ['StockProduct'];
 <p class="prix"><?php echo $PriceProduct.'€'; ?></p>
 
 <?php
-if ($stock > 0)
+if ($stock > 0) // si stock supérieur à 0 
 {
 ?>
 
@@ -51,7 +49,7 @@ if ($stock > 0)
 
 <?php
 }
-else
+else // si produit hors stock 
 {
 ?>
 <p class="reappro">En cours de réapprovisionnement</p>
