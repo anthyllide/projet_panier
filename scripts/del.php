@@ -16,6 +16,8 @@ elseif ((isset ($_GET['id'])) AND (count($_SESSION['panier']) === 1))
 
 $_SESSION ['panier'] = array();
 
+$_SESSION ['del'] = 'del';
+
 header('location:../panier.php');
 exit;
 }

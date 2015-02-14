@@ -21,6 +21,8 @@ $_SESSION ['panier'][$id] --;
 	elseif (($_SESSION ['panier'][$id] === 0) AND (count($_SESSION['panier']) === 1))
 	{
 	$_SESSION ['panier'] = array();
+	
+	$_SESSION['del'] = 'del';
 
 	header('location:../panier.php');
 	exit;

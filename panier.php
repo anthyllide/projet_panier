@@ -25,8 +25,9 @@ require ('scripts/session_panier.php');
 if (isset ($message)) //affichage message erreur
 {
 ?>
-<p class="erreur"><?php echo $message;
-exit; ?></p>
+<p class="erreur">
+<?php echo $message;
+exit; ?></p> <!-- on stoppe le script ici car pas la peine d'affichage un tableau vide !-->
 <?php
 }
 
