@@ -42,6 +42,8 @@ unset ($_SESSION ['stock_error']);
 
 <section>
 
+<p class="lien_retour"><a href="index.php">Continuez vos achats</a></p>
+
 <table>
 
 <thead>
@@ -94,13 +96,13 @@ $grand_total += $prix_total;
 <td class="no_border"></td>
 <td class="no_border"></td>
 <td class="table_bold">TOTAL</td>
-<td><?php echo $grand_total.'€'; ?> </td>
+<td class="bold"><?php echo $grand_total.'€'; ?> </td>
 </tr>
 <tr>
 <td class="no_border"></td>
 <td class="no_border"></td>
-<td class="table_bold">dont TVA 20%</td>
-<td><?php echo round ($tva = $grand_total -($grand_total*0.8),2).'€' ;?></td>
+<td class="table_small">dont TVA 20%</td>
+<td class="small"><?php echo round ($tva = $grand_total -($grand_total*0.8),2).'€' ;?></td>
 </tr>
 </tfoot>
 

@@ -45,6 +45,22 @@ font-size : 50px;
 color : orange;
 }
 
+.lien_retour{
+margin : 2px 0 20px 100px;
+font-family : Arial;
+font-size : 18px;
+}
+
+.lien_retour a {
+text-decoration : none;
+color : green;
+font-weight : bold;
+}
+
+.lien_retour a:hover {
+color: orange;
+}
+
 
 aside {
 position : absolute;
@@ -84,7 +100,7 @@ background-color : white;
 border-radius : 20px;
 margin-bottom : 10px;
 min-height : 500px;
-padding: 20px 0 20px 0;
+padding: 20px 0 20px 0; 
 }
 
 .article {
@@ -174,6 +190,23 @@ border : none;
 font-weight : bold;
 text-align : right;
 padding-right : 5px;
+border-top : 3px solid black;
+}
+
+.bold{
+font-weight : bold;
+border-top : 3px solid black;
+}
+
+.table_small {
+font-weight : bold;
+text-align : right;
+padding-right : 5px;
+font-size : 11px;
+}
+
+.small {
+font-size : 12px;
 }
 
 .choix_quantite{
